@@ -20,7 +20,10 @@ $(document).ready(function(){
     function initJournalTable() {
         $.ajax({
             type: 'POST',
-            url: 'manage-journals/fetch-journals.php',
+            url: 'config/Ajax.php',
+            data:{
+                action: 'fetchJournalsCRUD'
+            },
             success: function (res){
                 var data = JSON.parse(res);
                 var $output = $();
@@ -50,8 +53,11 @@ $(document).ready(function(){
 
         $.ajax({
             type: 'POST',
-            url: 'manage-journals/fetch-journal-data.php',
-            data: {journal_id: journal_id},
+            url: 'config/Ajax.php',
+            data: {
+                action: 'fetchJournalByIDCrud',
+                journal_id: journal_id
+            },
             success: function (res) {
 
                 var data = JSON.parse(res)
