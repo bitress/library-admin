@@ -15,6 +15,10 @@ if(isset($_POST['action'])){
             $journal = new Journal();
             $journal->fetchJournalByID($_POST['journal_id']);
             break;
+        case 'fetchJournalMonthly':
+            $journal = new Journal();
+            $journal->fetchJournalMonthly();
+            break;
         default:
             echo "No action specified";
     }
