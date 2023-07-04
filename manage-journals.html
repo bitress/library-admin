@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" integrity="sha512-IXuoq1aFd2wXs4NqGskwX2Vb+I8UJ+tGJEu/Dc0zwLNKeQ7CW3Sr6v0yU3z5OQWe3eScVIkER4J9L7byrgR/fA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js" integrity="sha512-JnjG+Wt53GspUQXQhc+c4j8SBERsgJAoHeehagKHlxQN+MtCCmFDghX9/AcbkkNRZptyZU4zC8utK59M5L45Iw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+</head>
+
+<body class="dark">
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="manage-journals.html">Manage Journals</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ebooks
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="manage-ebooks.html">Manage Ebooks</a></li>
+                        <li><a class="dropdown-item" href="#">Manage Ebooks Category</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <div class="d-flex">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="container mt-5 py-6 mx-auto mb-12">
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_modal">
+        Add Journal
+    </button>
+
+    <div class="row -mx-3">
+
+        <h3>Manage Journals</h3>
+
+        <div class="table-responsive">
+            <table class="table" id="journals_table">
+                <thead>
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Journal ID
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Journal Name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Journal Description
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Journal URL
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Journal Image
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Date Posted
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Action
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tbody id="journals_view">
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Journal</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" name="journalID" id="journalID" value="">
+                    <div class="mb-6">
+                        <label for="journal_name" class="block mb-2 text-sm font-medium text-gray-900">Journal Name</label>
+                        <input type="text" id="journal_name" class="form-control" placeholder="Enter Journal Name" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="journal_description" class="block mb-2 text-sm font-medium text-gray-900">Journal Description</label>
+                        <textarea id="journal_description" rows="5" class="form-control" placeholder="Enter Journal Description"></textarea>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="journal_url" class="block mb-2 text-sm font-medium text-gray-900">Journal URL</label>
+                        <input type="text" id="journal_url" class="form-control" placeholder="Enter Journal URL" required>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="journal_image" class="block mb-2 text-sm font-medium text-gray-900">Journal Image</label>
+                        <input type="text" id="journal_image" class="form-control" placeholder="Enter Journal Image URL" required>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="image_preview">Image Preview</label>
+                        <img src="" height="100px" width="100px" id="image_preview" alt="Journal Image">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save_journal_edit">Save </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="add_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="add_modallabel">Edit Journal</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-6">
+                        <label for="add_journal_name" class="block mb-2 text-sm font-medium text-gray-900">Journal Name</label>
+                        <input type="text" id="add_journal_name" class="form-control" placeholder="Enter Journal Name" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="journal_description" class="block mb-2 text-sm font-medium text-gray-900">Journal Description</label>
+                        <textarea id="add_journal_description" rows="5" class="form-control" placeholder="Enter Journal Description"></textarea>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="add_journal_url" class="block mb-2 text-sm font-medium text-gray-900">Journal URL</label>
+                        <input type="text" id="add_journal_url" class="form-control" placeholder="Enter Journal URL" required>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="add_journal_image" class="block mb-2 text-sm font-medium text-gray-900">Journal Image</label>
+                        <input type="text" id="add_journal_image" class="form-control" placeholder="Enter Journal Image URL" required>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="image_preview">Image Preview</label>
+                        <img src="" height="100px" width="100px" id="image_preview" alt="Journal Image">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save_journal">Save </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function(){
+        var notyf = new Notyf();
+
+        function generateTemplate(res){
+
+            var template =  '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">';
+            template +=  '<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">'+ res.journalID +'</th>';
+            template +=  '<td class="px-6 py-4">'+ res.journalname +'</td>';
+            template +=  '<td class="px-6 py-4">'+ res.description +'</td>';
+            template +=  '<td class="px-6 py-4"><a href="'+ res.url +'" target="_blank">'+ res.url +'</a> </td>';
+            template +=  '<td class="px-6 py-4"><img src="'+ res.imageurl +'" height="50px" width="50px" alt="'+ res.journalname +'"></td>';
+            template +=  '<td class="px-6 py-4">'+ res.dateposted +'</td>';
+            template +=  '<td class="px-6 py-4 text-right"><a data-modal-target="defaultModal" data-modal-toggle="defaultModal"  class="edit" data-id="'+ res.journalID +'">Edit</a> <a data-name="'+ res.journalname +'" class="delete" data-id="'+ res.journalID +'">Delete</a></td>';
+            template +=  '</tr>';
+
+            return $(template);
+
+        }
+
+        function initJournalTable() {
+            $.ajax({
+                type: 'POST',
+                url: 'config/Ajax.php',
+                data:{
+                    action: 'fetchJournalsCRUD'
+                },
+                success: function (res){
+                    var data = JSON.parse(res);
+                    var $output = $();
+                    for(var i=0; i<data.journal.length; i++) {
+                        $output = $output.add(generateTemplate(data.journal[i]));
+                    }
+                    $("#journals_view").html($output);
+
+                }
+            })
+        }
+
+        initJournalTable()
+
+
+
+        // Change Journal Image Preview on text input field change
+        $('#journal_image').on('input',function(e){
+            $("#image_preview").attr("src",this.value);
+        });
+
+
+        // Fetch the journal data
+        $(document).on('click', '.edit', function (){
+
+            let journal_id = $(this).data('id');
+            let editModal = new bootstrap.Modal('#edit_modal')
+            $.ajax({
+                type: 'POST',
+                url: 'config/Ajax.php',
+                data: {
+                    action: 'fetchJournalByIDCrud',
+                    journal_id: journal_id
+                },
+                success: function (res) {
+
+                    var data = JSON.parse(res)
+                    $("#journal_name").val(data.journalname);
+                    $("#journalID").val(data.journalID);
+                    $("#journal_description").val(data.description);
+                    $("#journal_url").val(data.url);
+                    $("#journal_image").val(data.imageurl);
+                    $("#image_preview").attr("src",data.imageurl);
+
+                    editModal.show();
+
+                }
+            })
+
+        });
+
+        $(document).on('click', '.delete', function () {
+
+            let journal_id = $(this).data('id');
+            let name = $(this).data('name');
+
+            var prompt = 'Are you sure you want to delete ' + name
+
+            alertify.confirm('Are you sure?', prompt,
+                function(){
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'config/Ajax.php',
+                    data: {
+                        action: 'deleteJournal',
+                        journal_id: journal_id
+                    }, success: function (res){
+                        if (res === "true"){
+                            notyf.success('Your changes have been successfully saved!');
+                            initJournalTable();
+                        } else {
+                            notyf.error(res)
+                        }
+                    }
+                })
+
+
+
+
+
+                }, function(){ alertify.error('Cancel')});
+
+
+
+        });
+
+        $("#save_journal_edit").on('click', function(e) {
+
+            var data = {
+                journalname: $("#journal_name").val(),
+                journalID:  $("#journalID").val(),
+                description: $("#journal_description").val(),
+                url: $("#journal_url").val(),
+                imageurl: $("#journal_image").val()
+            };
+
+
+            $.ajax({
+                type: "POST",
+                url: 'config/Ajax.php',
+                data: {
+                    action: 'editJournal',
+                    journalID: data.journalID,
+                    journalname: data.journalname,
+                    description: data.description,
+                    url: data.url,
+                    imageurl: data.imageurl
+                },
+                success: function(res){
+                    if (res === "true"){
+                        notyf.success('Your changes have been successfully saved!');
+                        initJournalTable();
+                    } else {
+                        notyf.error(res)
+                    }
+                }
+            })
+
+        });
+
+        $("#save_journal").on('click', function(e) {
+
+            var data = {
+                journalname: $("#add_journal_name").val(),
+                description: $("#add_journal_description").val(),
+                url: $("#add_journal_url").val(),
+                imageurl: $("#add_journal_image").val()
+            };
+
+
+            $.ajax({
+                type: "POST",
+                url: "config/Ajax.php",
+                data: {
+                    action: "addJournal",
+                    journalname: data.journalname,
+                    description: data.description,
+                    url: data.url,
+                    imageurl: data.imageurl
+                },
+                success: function(res){
+                    if (res === "true"){
+                        notyf.success('Journal have been successfully saved!');
+                        initJournalTable();
+                    } else {
+                        notyf.error(res)
+                    }
+                }
+            })
+
+        });
+    })
+
+
+</script>
+
+</body>
+</html>

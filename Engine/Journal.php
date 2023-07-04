@@ -24,17 +24,20 @@ class Journal
         }
 
         try {
+
             $date = date('Y-m-d H:i:s');
+
             $sql = "INSERT INTO journal (journalname, description, url, imageurl, dateposted) VALUES (:journalname, :journaldescription, :url, :image, :date)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':journalname', $journalname);
-            $stmt->bindParam(':description', $journal_description);
+            $stmt->bindParam(':journaldescription', $journal_description);
             $stmt->bindParam(':url', $journal_url);
             $stmt->bindParam(':image', $journal_image);
             $stmt->bindParam(":date", $date);
             if ($stmt->execute()) {
-                return true;
+                echo  "true";
             }
+
         } catch (Exception $e) {
             echo 'An error occurred';
         }
@@ -108,7 +111,7 @@ class Journal
             $stmt->bindParam(':image', $journal_image);
             $stmt->bindParam(':journal_id', $journal_id);
             if ($stmt->execute()) {
-                return true;
+                echo "true";
             }
         } catch (Exception $e) {
             echo 'Error has occurred while processing';
@@ -177,6 +180,24 @@ class Journal
             echo "Error: " . $e->getMessage();
         }
 
+    }
+
+    public function deleteJournal($journal_id)
+    {
+        try {
+
+            $sql = "DELETE FROM `journal` WHERE journalID = :jid";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":jid", $journal_id, PDO::PARAM_INT);
+            if ($stmt->execute()){
+
+                echo "true";
+
+            }
+
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 
 }
